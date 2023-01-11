@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,8 +13,25 @@ public class TaskManager {
         this.taskById = new HashMap<>();
     }
 
-    public void  clear(){
+    public void  clearAll(){
         this.taskById.clear();
+    }
+
+    public void clearSingleTasks(){
+        this.clearByType(TypeTask.REG);
+    }
+
+    public void clearEpicTasks(){
+        this.clearByType(TypeTask.EPIC);
+    }
+    public void clearSubTasks(){
+        this.clearByType(TypeTask.SUB);
+    }
+    private void clearByType(TypeTask typeTask){
+        ArrayList<Task> tasks = this.getTasksByType(typeTask);
+        for (Task task: tasks){
+            this.remove(task.getId());
+        }
     }
 
     public void update(Task task) {
@@ -25,14 +43,34 @@ public class TaskManager {
     }
 
     public ArrayList<Task> getAllTasks() {
-        ArrayList<Task> tasks = new ArrayList<>();
-        for (Task task : this.taskById.values()) {
-            tasks.add(task);
-        }
-        return tasks;
+        return new ArrayList<>(this.taskById.values());
     }
 
-    public ArrayList<Task> getTasksByType(TypeTask typeTask) {
+    public ArrayList<SingleTask> getSingleTasks(){
+        ArrayList<SingleTask> singleTasks = new ArrayList<>();
+        ArrayList<Task> tasks = this.getTasksByType(TypeTask.REG);
+        for (Task task: tasks){
+            singleTasks.add((SingleTask) task);
+        }
+        return singleTasks;
+    }
+    public ArrayList<SubTask> getSubTasks(){
+        ArrayList<SubTask> subTasks = new ArrayList<>();
+        ArrayList<Task> tasks = this.getTasksByType(TypeTask.SUB);
+        for (Task task: tasks){
+            subTasks.add((SubTask) task);
+        }
+        return subTasks;
+    }
+    public ArrayList<EpicTask> getEpicTasks() {
+        ArrayList<EpicTask> epicTasks = new ArrayList<>();
+        ArrayList<Task> tasks = this.getTasksByType(TypeTask.EPIC);
+        for (Task task : tasks) {
+            epicTasks.add((EpicTask) task);
+        }
+        return epicTasks;
+    }
+    private ArrayList<Task> getTasksByType(TypeTask typeTask) {
         ArrayList<Task> tasks = new ArrayList<>();
         for (Task task : this.taskById.values()) {
             if (task.getTypeTask().equals(typeTask)){
@@ -42,12 +80,21 @@ public class TaskManager {
         return tasks;
     }
 
-    public ArrayList<Task> getTaskById(List<Integer> taskIds) {
+    public ArrayList<Task> getTasksById(List<Integer> taskIds) {
         ArrayList<Task> tasks = new ArrayList<>();
         for (int id : taskIds) {
             tasks.add(this.taskById.get(id));
         }
         return tasks;
+    }
+
+    public List<SubTask> getAllSubTaskFromEpicById(int id){
+        Task task = getTaskById(id);
+        if (!task.getTypeTask().equals(TypeTask.EPIC)){
+            return null;
+        }
+        EpicTask epicTask = (EpicTask) task;
+        return ((EpicTask) task).getSubTasks();
     }
 
 
@@ -64,7 +111,7 @@ public class TaskManager {
                 break;
             case EPIC:
                 EpicTask epicTask = (EpicTask) task;
-                ArrayList<SubTask> subTasks = epicTask.getSubTasks();
+                ArrayList<SubTask> subTasks = (ArrayList<SubTask>) epicTask.getSubTasks();
                 for (SubTask tmpTask: subTasks){
                     this.taskById.remove(tmpTask.getId());
                 }
@@ -77,7 +124,7 @@ public class TaskManager {
         taskById.put(task.getId(), task);
     }
 
-    public static class TaskIdGenerator{
+    private static class TaskIdGenerator{
         private int nextFreeId ;
         public int getNextFreeId() {
             return nextFreeId++;

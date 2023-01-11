@@ -4,8 +4,8 @@ import java.util.List;
 public class EpicTask extends Task{
     private final List<SubTask> subTasks;
 
-    public EpicTask(int id, String name, String description) {
-        super(id, name, description);
+    public EpicTask(int id, String name, String description, StatusTask statusTask) {
+        super(id, name, description, statusTask);
         this.subTasks = new ArrayList<>();
     }
 
@@ -22,8 +22,8 @@ public class EpicTask extends Task{
         }
     }
 
-    public ArrayList<SubTask> getSubTasks(){
-        return (ArrayList<SubTask>) this.subTasks;
+    public List<SubTask> getSubTasks(){
+        return this.subTasks;
     }
 
     public void removeSubTask(SubTask subTask){

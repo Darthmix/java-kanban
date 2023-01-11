@@ -1,14 +1,13 @@
 public class SingleTask extends Task {
-    private final StatusTask statusTask;
+
 
     public SingleTask(int id, String name, String description,  StatusTask statusTask) {
-        super(id, name, description);
-        this.statusTask = statusTask;
+        super(id, name, description, statusTask);
     }
 
     @Override
     public StatusTask getStatus() {
-        return statusTask;
+        return this.statusTask;
     }
 
     public SingleTask withStatus(StatusTask statusTask) {

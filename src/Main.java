@@ -12,7 +12,7 @@ public class Main {
         taskManager.saveTask(singleTask2);
 
         // Создаём первый эпик с 2 подзадачами и сохраняем
-        EpicTask epicTask1 = new EpicTask(2, "EpicTask1", "Epic task 1");
+        EpicTask epicTask1 = new EpicTask(2, "EpicTask1", "Epic task 1", StatusTask.NEW);
         taskManager.saveTask(epicTask1);
 
         SubTask subTask1 = new SubTask(3, "SubTask1", "Subtask 1", StatusTask.NEW, epicTask1);
@@ -21,7 +21,7 @@ public class Main {
         taskManager.saveTask(subTask2);
 
         // Создаём второй эпик с одной подзадачей и сохраняем
-        EpicTask epicTask2 = new EpicTask(5, "EpicTask2", "Epic task 2");
+        EpicTask epicTask2 = new EpicTask(5, "EpicTask2", "Epic task 2", StatusTask.NEW);
         taskManager.saveTask(epicTask2);
 
         SubTask subTask3 = new SubTask(6, "SubTask3", "Subtask 3", StatusTask.NEW, epicTask2);
@@ -49,28 +49,40 @@ public class Main {
 
         // Получение списка задач в зависимости от типа
         System.out.println("Список обычных задач:");
-        System.out.println(taskManager.getTasksByType(TypeTask.REG));
+        System.out.println(taskManager.getSubTasks());
         System.out.println("Список эпик задач:");
-        System.out.println(taskManager.getTasksByType(TypeTask.EPIC));
+        System.out.println(taskManager.getEpicTasks());
         System.out.println("Список подзадач задач:");
-        System.out.println(taskManager.getTasksByType(TypeTask.SUB));
+        System.out.println(taskManager.getSubTasks());
 
         // Проверка удаления
-        System.out.println("Удаляем первую(0) обычную задачу");
-        taskManager.remove(0);
-        System.out.println(taskManager.getAllTasks());
+//        System.out.println("Удаляем первую(0) обычную задачу");
+//        taskManager.remove(0);
+//        System.out.println(taskManager.getAllTasks());
+//
+//        System.out.println("Удаляем подзадачу 1 эпика 1");
+//        taskManager.remove(3);
+//        System.out.println(taskManager.getAllTasks());
+//
+//        System.out.println("Удаляем эпик 2");
+//        taskManager.remove(5);
+//        System.out.println(taskManager.getAllTasks());
 
-        System.out.println("Удаляем подзадачу 1 эпика 1");
-        taskManager.remove(3);
-        System.out.println(taskManager.getAllTasks());
+//        System.out.println("Удаляем обычные задачи");
+//        taskManager.clearByType(TypeTask.REG);
+//        System.out.println(taskManager.getAllTasks());
 
-        System.out.println("Удаляем эпик 2");
-        taskManager.remove(5);
-        System.out.println(taskManager.getAllTasks());
+//        System.out.println("Удаляем эпики");
+//        taskManager.clearByType(TypeTask.EPIC);
+//        System.out.println(taskManager.getAllTasks());
 
-        System.out.println("Удаляем все");
-        taskManager.clear();
-        System.out.println(taskManager.getAllTasks());
+//        System.out.println("Удаляем подзадачи");
+//        taskManager.clearByType(TypeTask.SUB);
+//        System.out.println(taskManager.getAllTasks());
+
+//        System.out.println("Удаляем все");
+//        taskManager.clearAll();
+//        System.out.println(taskManager.getAllTasks());
 
     }
 }

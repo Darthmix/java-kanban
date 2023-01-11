@@ -4,10 +4,13 @@ public abstract class Task {
 
     private final String description;
 
-    public Task(int id, String name, String description) {
+    protected final StatusTask statusTask;
+
+    public Task(int id, String name, String description, StatusTask statusTask) {
         this.id          = id;
         this.name        = name;
         this.description = description;
+        this.statusTask = statusTask;
     }
 
     public int getId() {
