@@ -1,3 +1,5 @@
+package com.yandex.TaskManager.model;
+
 public class SingleTask extends Task {
 
 
@@ -26,7 +28,7 @@ public class SingleTask extends Task {
 
     @Override
     public String toString() {
-        return "SingleTask{" +
+        return "com.yandex.TaskManager.model.SingleTask{" +
                 "id=" + this.getId() +
                 ", name='" + this.getName() + '\'' +
                 ", description='" + this.getDescription() + '\'' +

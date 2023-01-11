@@ -1,7 +1,9 @@
+package com.yandex.TaskManager.model;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class EpicTask extends Task{
+public class EpicTask extends Task {
     private final List<SubTask> subTasks;
 
     public EpicTask(int id, String name, String description, StatusTask statusTask) {
@@ -20,6 +22,7 @@ public class EpicTask extends Task{
         if (!findSubTask){
             this.subTasks.add(subTask);
         }
+        this.statusTask = this.getStatus();
     }
 
     public List<SubTask> getSubTasks(){
@@ -28,6 +31,7 @@ public class EpicTask extends Task{
 
     public void removeSubTask(SubTask subTask){
         this.subTasks.remove(subTask);
+        this.statusTask = this.getStatus();
     }
 
     @Override
@@ -57,11 +61,11 @@ public class EpicTask extends Task{
 
     @Override
     public String toString() {
-        return "EpicTask{" +
+        return "com.yandex.TaskManager.model.EpicTask{" +
                 "id=" + this.getId() +
                 ", name='" + this.getName() + '\'' +
                 ", description='" + this.getDescription() + '\'' +
-                ", statusTask=" + this.getStatus() +
+                ", statusTask=" + this.statusTask + //this.getStatus() +
                 ", subtasks=" + '\n' + this.subTasks +
                 '}' + '\n' ;
     }

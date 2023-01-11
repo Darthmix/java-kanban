@@ -1,3 +1,7 @@
+package com.yandex.TaskManager;
+
+import com.yandex.TaskManager.model.*;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -40,20 +44,20 @@ public class Main {
 
         SubTask tmpSubTask;
         tmpSubTask = (SubTask) taskManager.getTaskById(3);
-        taskManager.saveTask(tmpSubTask.withStatus(StatusTask.IN_PROGRESS));
+        taskManager.saveTask(tmpSubTask.withStatus(StatusTask.IN_PROGRESS, epicTask1));
         tmpSubTask = (SubTask) taskManager.getTaskById(6);
-        taskManager.saveTask(tmpSubTask.withStatus(StatusTask.DONE));
+        taskManager.saveTask(tmpSubTask.withStatus(StatusTask.DONE, epicTask2));
 
         System.out.println("После изменения статусов");
         System.out.println(taskManager.getAllTasks());
 
-        // Получение списка задач в зависимости от типа
-        System.out.println("Список обычных задач:");
-        System.out.println(taskManager.getSubTasks());
-        System.out.println("Список эпик задач:");
-        System.out.println(taskManager.getEpicTasks());
-        System.out.println("Список подзадач задач:");
-        System.out.println(taskManager.getSubTasks());
+//        // Получение списка задач в зависимости от типа
+//        System.out.println("Список обычных задач:");
+//        System.out.println(taskManager.getSubTasks());
+//        System.out.println("Список эпик задач:");
+//        System.out.println(taskManager.getEpicTasks());
+//        System.out.println("Список подзадач задач:");
+//        System.out.println(taskManager.getSubTasks());
 
         // Проверка удаления
 //        System.out.println("Удаляем первую(0) обычную задачу");
@@ -69,15 +73,15 @@ public class Main {
 //        System.out.println(taskManager.getAllTasks());
 
 //        System.out.println("Удаляем обычные задачи");
-//        taskManager.clearByType(TypeTask.REG);
+//        taskManager.clearByType(com.yandex.TaskManager.model.TypeTask.REG);
 //        System.out.println(taskManager.getAllTasks());
 
 //        System.out.println("Удаляем эпики");
-//        taskManager.clearByType(TypeTask.EPIC);
+//        taskManager.clearByType(com.yandex.TaskManager.model.TypeTask.EPIC);
 //        System.out.println(taskManager.getAllTasks());
 
 //        System.out.println("Удаляем подзадачи");
-//        taskManager.clearByType(TypeTask.SUB);
+//        taskManager.clearByType(com.yandex.TaskManager.model.TypeTask.SUB);
 //        System.out.println(taskManager.getAllTasks());
 
 //        System.out.println("Удаляем все");

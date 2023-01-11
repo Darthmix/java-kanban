@@ -1,5 +1,6 @@
+package com.yandex.TaskManager.model;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,10 +33,6 @@ public class TaskManager {
         for (Task task: tasks){
             this.remove(task.getId());
         }
-    }
-
-    public void update(Task task) {
-        taskById.put(task.getId(), task);
     }
 
     public Task getTaskById(int id) {
@@ -106,7 +103,7 @@ public class TaskManager {
                 break;
             case SUB:
                 SubTask subTask = (SubTask) task;
-                subTask.revoveFromEpic();
+                subTask.removeFromEpic( (EpicTask) this.taskById.get(subTask.getEpicId()) );
                 this.taskById.remove(task.getId());
                 break;
             case EPIC:
@@ -120,7 +117,6 @@ public class TaskManager {
         }
     }
     public void saveTask(Task task){
-
         taskById.put(task.getId(), task);
     }
 
