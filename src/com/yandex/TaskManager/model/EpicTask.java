@@ -6,8 +6,8 @@ import java.util.List;
 public class EpicTask extends Task {
     private final List<SubTask> subTasks;
 
-    public EpicTask(int id, String name, String description, StatusTask statusTask) {
-        super(id, name, description, statusTask);
+    public EpicTask(int id, String name, String description) {
+        super(id, name, description, StatusTask.NEW);
         this.subTasks = new ArrayList<>();
     }
 
@@ -22,7 +22,7 @@ public class EpicTask extends Task {
         if (!findSubTask){
             this.subTasks.add(subTask);
         }
-        this.statusTask = this.getStatus();
+        this.statusTask = this.calcStatus();
     }
 
     public List<SubTask> getSubTasks(){
@@ -31,11 +31,11 @@ public class EpicTask extends Task {
 
     public void removeSubTask(SubTask subTask){
         this.subTasks.remove(subTask);
-        this.statusTask = this.getStatus();
+        this.statusTask = this.calcStatus();
     }
 
-    @Override
-    public StatusTask getStatus() {
+
+    private StatusTask calcStatus(){
         if (this.subTasks.isEmpty() || isAllSubTasksByStatusTask(StatusTask.NEW)){
             return  StatusTask.NEW;
         } else if (isAllSubTasksByStatusTask(StatusTask.DONE)) {
@@ -43,6 +43,10 @@ public class EpicTask extends Task {
         }else {
             return StatusTask.IN_PROGRESS;
         }
+    }
+    @Override
+    public StatusTask getStatus() {
+        return this.statusTask;
     }
 
     private boolean isAllSubTasksByStatusTask(StatusTask statusTask){

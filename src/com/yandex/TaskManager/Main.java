@@ -9,14 +9,16 @@ public class Main {
         TaskManager taskManager = new TaskManager();
 
         // Создаём 2 обычные задачи, сохраняем их
-        SingleTask singleTask1 = new SingleTask( 0, "CommonTask1", "Common task 1", StatusTask.NEW );
-        SingleTask singleTask2 = new SingleTask( 1, "CommonTask2", "Common task 2", StatusTask.NEW );
+//        SingleTask singleTask1 = new SingleTask( 0, "CommonTask1", "Common task 1", StatusTask.NEW );
+//        SingleTask singleTask2 = new SingleTask( 1, "CommonTask2", "Common task 2", StatusTask.NEW );
+        SingleTask singleTask1 = taskManager.createSingleTask("CommonTask1", "Common task 1");
+        SingleTask singleTask2 = taskManager.createSingleTask("CommonTask2", "Common task 2");
 
         taskManager.saveTask(singleTask1);
         taskManager.saveTask(singleTask2);
 
         // Создаём первый эпик с 2 подзадачами и сохраняем
-        EpicTask epicTask1 = new EpicTask(2, "EpicTask1", "Epic task 1", StatusTask.NEW);
+        EpicTask epicTask1 = new EpicTask(2, "EpicTask1", "Epic task 1");
         taskManager.saveTask(epicTask1);
 
         SubTask subTask1 = new SubTask(3, "SubTask1", "Subtask 1", StatusTask.NEW, epicTask1);
@@ -25,7 +27,7 @@ public class Main {
         taskManager.saveTask(subTask2);
 
         // Создаём второй эпик с одной подзадачей и сохраняем
-        EpicTask epicTask2 = new EpicTask(5, "EpicTask2", "Epic task 2", StatusTask.NEW);
+        EpicTask epicTask2 = new EpicTask(5, "EpicTask2", "Epic task 2");
         taskManager.saveTask(epicTask2);
 
         SubTask subTask3 = new SubTask(6, "SubTask3", "Subtask 3", StatusTask.NEW, epicTask2);

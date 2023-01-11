@@ -1,5 +1,6 @@
 package com.yandex.TaskManager.model;
 
+import java.awt.desktop.ScreenSleepEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +32,7 @@ public class TaskManager {
     private void clearByType(TypeTask typeTask){
         ArrayList<Task> tasks = this.getTasksByType(typeTask);
         for (Task task: tasks){
-            this.remove(task.getId());
+            this.removeTask(task.getId());
         }
     }
 
@@ -77,25 +78,17 @@ public class TaskManager {
         return tasks;
     }
 
-    public ArrayList<Task> getTasksById(List<Integer> taskIds) {
-        ArrayList<Task> tasks = new ArrayList<>();
-        for (int id : taskIds) {
-            tasks.add(this.taskById.get(id));
-        }
-        return tasks;
-    }
-
     public List<SubTask> getAllSubTaskFromEpicById(int id){
         Task task = getTaskById(id);
         if (!task.getTypeTask().equals(TypeTask.EPIC)){
             return null;
         }
         EpicTask epicTask = (EpicTask) task;
-        return ((EpicTask) task).getSubTasks();
+        return epicTask.getSubTasks();
     }
 
 
-    public void remove(int id){
+    public void removeTask(int id){
         Task task = this.getTaskById(id);
         switch (task.getTypeTask()){
             case REG:
@@ -118,6 +111,30 @@ public class TaskManager {
     }
     public void saveTask(Task task){
         taskById.put(task.getId(), task);
+    }
+
+    public SingleTask createSingleTask(String name, String description ){
+        return new SingleTask(
+                this.taskIdGenerator.getNextFreeId(),
+                name,
+                description,
+                StatusTask.NEW );
+    }
+    public  EpicTask createEpicTask(String name, String description){
+        return new EpicTask(
+                this.taskIdGenerator.getNextFreeId(),
+                name,
+                description);
+    }
+
+    public SubTask createSubTask(String name, String description, EpicTask epicTask){
+        return  new SubTask(
+                this.taskIdGenerator.getNextFreeId(),
+                name,
+                description,
+                StatusTask.NEW,
+                epicTask
+        );
     }
 
     private static class TaskIdGenerator{
