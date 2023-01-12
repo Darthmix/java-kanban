@@ -2,22 +2,29 @@ package com.yandex.TaskManager.model;
 
 public class SubTask extends Task{
     private  final  Integer epicTaskId;
-    public SubTask(int id, String name, String description, StatusTask statusTask, EpicTask epic) {
-        super(id, name, description, statusTask);
-        this.epicTaskId = epic.getId();
-        epic.addSubTask(this);
+    public SubTask(int id, String name, String description, int epicTaskId) {
+        super(id, name, description, StatusTask.NEW);
+        this.epicTaskId = epicTaskId;
+//        epic.addSubTask(this);
     }
-
-    public SubTask withStatus(StatusTask statusTask, EpicTask epicTask) {
-        return new SubTask(
+    private void setStatus(StatusTask statusTask){
+        this.statusTask = statusTask;
+    }
+    public SubTask withStatus(StatusTask statusTask) {
+        SubTask subTask =  new SubTask(
                 this.getId(),
                 this.getName(),
                 this.getDescription(),
-                statusTask,
-                epicTask
+                this.getEpicTaskId()
         );
+        subTask.setStatus(statusTask);
+        return subTask;
     }
     public int getEpicId(){
+        return epicTaskId;
+    }
+
+    public Integer getEpicTaskId() {
         return epicTaskId;
     }
 
@@ -43,5 +50,23 @@ public class SubTask extends Task{
                 ", description='" + this.getDescription() + '\'' +
                 ", statusTask=" + this.getStatus() +
                 '}' + '\n';
+    }
+
+    public static class ToCreate{
+        private String name;
+        private String description;
+
+        public ToCreate(String name, String description) {
+            this.name = name;
+            this.description = description;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
     }
 }

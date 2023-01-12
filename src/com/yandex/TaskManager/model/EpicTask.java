@@ -11,7 +11,7 @@ public class EpicTask extends Task {
         this.subTasks = new ArrayList<>();
     }
 
-    protected void addSubTask(SubTask subTask) {
+    protected void modifySubTask(SubTask subTask) { // Add if not exist, or modify existed object
         boolean findSubTask = false;
         for (int i = 0; i<this.subTasks.size(); i++){
             if (this.subTasks.get(i).getId() == subTask.getId()){
@@ -34,8 +34,10 @@ public class EpicTask extends Task {
         this.statusTask = this.calcStatus();
     }
 
-
-    private StatusTask calcStatus(){
+    public void  setStatus(StatusTask statusTask){
+        this.statusTask = statusTask;
+    }
+    public StatusTask calcStatus(){
         if (this.subTasks.isEmpty() || isAllSubTasksByStatusTask(StatusTask.NEW)){
             return  StatusTask.NEW;
         } else if (isAllSubTasksByStatusTask(StatusTask.DONE)) {
@@ -69,9 +71,26 @@ public class EpicTask extends Task {
                 "id=" + this.getId() +
                 ", name='" + this.getName() + '\'' +
                 ", description='" + this.getDescription() + '\'' +
-                ", statusTask=" + this.statusTask + //this.getStatus() +
+                ", statusTask=" + this.statusTask +
                 ", subtasks=" + '\n' + this.subTasks +
                 '}' + '\n' ;
     }
 
+    public static class ToCreate{
+        private String name;
+        private String description;
+
+        public ToCreate(String name, String description) {
+            this.name = name;
+            this.description = description;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+    }
 }
