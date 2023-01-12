@@ -2,8 +2,9 @@ package com.yandex.TaskManager.model;
 
 public class SingleTask extends Task {
 
-    public SingleTask(int id, String name, String description) {
-        super(id, name, description, StatusTask.NEW);
+    public SingleTask( String name, String description) {
+        super(name, description);
+        this.statusTask = StatusTask.NEW;
     }
 
     @Override
@@ -13,10 +14,10 @@ public class SingleTask extends Task {
 
     public SingleTask withStatus(StatusTask statusTask) {
         SingleTask singleTask = new SingleTask(
-                                    this.getId(),
                                     this.getName(),
                                     this.getDescription()
         );
+        singleTask.setId(this.getId());
         singleTask.setStatus(statusTask);
         return singleTask;
     }
@@ -40,21 +41,4 @@ public class SingleTask extends Task {
                 '}' + '\n';
     }
 
-    public static class ToCreate{
-        private String name;
-        private String description;
-
-        public ToCreate(String name, String description) {
-            this.name = name;
-            this.description = description;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-    }
 }

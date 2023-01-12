@@ -9,19 +9,28 @@ public class Main {
         TaskManager taskManager = new TaskManager();
 
         // Создаём 2 обычные задачи, сохраняем их
-        SingleTask singleTask1 = taskManager.createSingleTask(new SingleTask.ToCreate("CommonTask1", "Common task 1"));
-        SingleTask singleTask2 = taskManager.createSingleTask(new SingleTask.ToCreate("CommonTask2", "Common task 2"));
+
+        SingleTask singleTask1 = new SingleTask("CommonTask1", "Common task 1");
+        taskManager.createTask(singleTask1);
+        SingleTask singleTask2 = new SingleTask("CommonTask2", "Common task 2");
+        taskManager.createTask(singleTask2);
 
         // Создаём первый эпик с 2 подзадачами и сохраняем
-        EpicTask epicTask1 = taskManager.createEpicTask(new EpicTask.ToCreate("EpicTask1", "Epic task 1"));
+        EpicTask epicTask1 = new EpicTask("EpicTask1", "Epic task 1");
+        taskManager.createTask(epicTask1);
 
-        SubTask subTask1 = taskManager.createSubTask(new SubTask.ToCreate("SubTask1", "Subtask 1"), epicTask1.getId());
-        SubTask subTask2 = taskManager.createSubTask(new SubTask.ToCreate("SubTask2", "Subtask 2"), epicTask1.getId());
+        SubTask subTask1 = new SubTask("SubTask1", "Subtask 1", epicTask1.getId());
+        taskManager.createTask(subTask1);
+        SubTask subTask2 = new SubTask("SubTask2", "Subtask 2", epicTask1.getId());
+        taskManager.createTask(subTask2);
+
 
         // Создаём второй эпик с одной подзадачей и сохраняем
-        EpicTask epicTask2 = taskManager.createEpicTask(new EpicTask.ToCreate("EpicTask2", "Epic task 2"));
+        EpicTask epicTask2 = new EpicTask("EpicTask2", "Epic task 2");
+        taskManager.createTask(epicTask2);
 
-        SubTask subTask3 = taskManager.createSubTask(new SubTask.ToCreate("SubTask3", "Subtask 3"), epicTask2.getId());
+        SubTask subTask3 = new SubTask("SubTask3", "Subtask 3", epicTask2.getId());
+        taskManager.createTask(subTask3);
 
         System.out.println("Созданные объекты");
         System.out.println(taskManager.getAllTasks());
@@ -30,15 +39,15 @@ public class Main {
         SingleTask tmpSingleTask;
 
         tmpSingleTask = (SingleTask) taskManager.getTaskById(0);
-        taskManager.setSingleTaskStatus(tmpSingleTask, StatusTask.IN_PROGRESS);
+        taskManager.updateTask(tmpSingleTask.withStatus(StatusTask.IN_PROGRESS));
         tmpSingleTask = (SingleTask) taskManager.getTaskById(1);
-        taskManager.setSingleTaskStatus(tmpSingleTask, StatusTask.DONE);
+        taskManager.updateTask(tmpSingleTask.withStatus(StatusTask.DONE));
 
         SubTask tmpSubTask;
         tmpSubTask = (SubTask) taskManager.getTaskById(3);
-        taskManager.setSubTaskStatus(tmpSubTask, StatusTask.IN_PROGRESS);
+        taskManager.updateTask(tmpSubTask.withStatus(StatusTask.IN_PROGRESS));
         tmpSubTask = (SubTask) taskManager.getTaskById(6);
-        taskManager.setSubTaskStatus(tmpSubTask, StatusTask.DONE);
+        taskManager.updateTask(tmpSubTask.withStatus(StatusTask.DONE));
 
         System.out.println("После изменения статусов");
         System.out.println(taskManager.getAllTasks());
@@ -52,17 +61,17 @@ public class Main {
         System.out.println(taskManager.getSubTasks());
 
         // Проверка удаления
-//        System.out.println("Удаляем первую(0) обычную задачу");
-//        taskManager.removeTask(0);
-//        System.out.println(taskManager.getAllTasks());
-//
-//        System.out.println("Удаляем подзадачу 1 эпика 1");
-//        taskManager.removeTask(3);
-//        System.out.println(taskManager.getAllTasks());
-//
-//        System.out.println("Удаляем эпик 2");
-//        taskManager.removeTask(5);
-//        System.out.println(taskManager.getAllTasks());
+        System.out.println("Удаляем первую(0) обычную задачу");
+        taskManager.removeTask(0);
+        System.out.println(taskManager.getAllTasks());
+
+        System.out.println("Удаляем подзадачу 1 эпика 1");
+        taskManager.removeTask(3);
+        System.out.println(taskManager.getAllTasks());
+
+        System.out.println("Удаляем эпик 2");
+        taskManager.removeTask(5);
+        System.out.println(taskManager.getAllTasks());
 
         System.out.println("Удаляем обычные задачи");
         taskManager.clearSingleTasks();

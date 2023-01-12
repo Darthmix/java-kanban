@@ -2,21 +2,21 @@ package com.yandex.TaskManager.model;
 
 public class SubTask extends Task{
     private  final  Integer epicTaskId;
-    public SubTask(int id, String name, String description, int epicTaskId) {
-        super(id, name, description, StatusTask.NEW);
+    public SubTask( String name, String description, int epicTaskId) {
+        super( name, description);
+        this.statusTask = StatusTask.NEW;
         this.epicTaskId = epicTaskId;
-//        epic.addSubTask(this);
     }
     private void setStatus(StatusTask statusTask){
         this.statusTask = statusTask;
     }
     public SubTask withStatus(StatusTask statusTask) {
         SubTask subTask =  new SubTask(
-                this.getId(),
                 this.getName(),
                 this.getDescription(),
                 this.getEpicTaskId()
         );
+        subTask.setId(this.getId());
         subTask.setStatus(statusTask);
         return subTask;
     }
@@ -52,21 +52,4 @@ public class SubTask extends Task{
                 '}' + '\n';
     }
 
-    public static class ToCreate{
-        private String name;
-        private String description;
-
-        public ToCreate(String name, String description) {
-            this.name = name;
-            this.description = description;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-    }
 }

@@ -109,52 +109,25 @@ public class TaskManager {
         }
     }
 
-    public void saveTask(Task task){
+    public void createTask(Task task){
+        task.setId(this.taskIdGenerator.getNextFreeId());
         this.taskById.put(task.getId(), task);
-    }
-    public SingleTask createSingleTask(SingleTask.ToCreate singleTaskToCreate){
-
-        SingleTask singleTask =  new SingleTask(
-                this.taskIdGenerator.getNextFreeId(),
-                singleTaskToCreate.getName(),
-                singleTaskToCreate.getDescription());
-
-        this.taskById.put(singleTask.getId(), singleTask);
-        return singleTask;
+        if (task.getTypeTask().equals(TypeTask.SUB)){
+            SubTask subTask = (SubTask) task;
+            EpicTask epicTask = (EpicTask) this.taskById.get(subTask.getEpicTaskId());
+            epicTask.modifySubTask(subTask);
+            this.taskById.put(epicTask.getId(), epicTask);
+        }
     }
 
-    public void setSingleTaskStatus(SingleTask singleTask, StatusTask statusTask){
-        this.taskById.put(singleTask.getId(), singleTask.withStatus(statusTask));
-    }
-    public EpicTask createEpicTask(EpicTask.ToCreate epicTaskToCreate){
-        EpicTask epicTask = new EpicTask(
-                this.taskIdGenerator.getNextFreeId(),
-                epicTaskToCreate.getName(),
-                epicTaskToCreate.getDescription());
-        this.taskById.put(epicTask.getId(),epicTask);
-        return epicTask;
-    }
-
-    public SubTask createSubTask(SubTask.ToCreate subTaskToCreate, int epicTaskId){
-        SubTask subTask =  new SubTask(
-                this.taskIdGenerator.getNextFreeId(),
-                subTaskToCreate.getName(),
-                subTaskToCreate.getDescription(),
-                epicTaskId
-        );
-        this.taskById.put(subTask.getId(), subTask);
-        EpicTask epicTask = (EpicTask) this.taskById.get(epicTaskId);
-        epicTask.modifySubTask(subTask);
-        this.taskById.put(epicTask.getId(), epicTask);
-        return subTask;
-    }
-
-    public void setSubTaskStatus(SubTask subTask, StatusTask statusTask){
-        EpicTask epicTask = (EpicTask) this.getTaskById(subTask.getEpicTaskId());
-        SubTask task = subTask.withStatus(statusTask);
-        epicTask.modifySubTask(task);
+    public void updateTask(Task task){
         this.taskById.put(task.getId(), task);
-        this.taskById.put(epicTask.getId(), epicTask);
+        if (task.getTypeTask().equals(TypeTask.SUB)){
+            SubTask subTask = (SubTask) task;
+            EpicTask epicTask = (EpicTask) this.taskById.get(subTask.getEpicTaskId());
+            epicTask.modifySubTask(subTask);
+            this.taskById.put(epicTask.getId(), epicTask);
+        }
     }
 
     private static class TaskIdGenerator{

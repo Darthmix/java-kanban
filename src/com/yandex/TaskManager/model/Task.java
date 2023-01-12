@@ -1,18 +1,20 @@
 package com.yandex.TaskManager.model;
 
 public abstract class Task {
-    private final int id;
-    private final String name;
+    private int id;
+    private String name;
 
-    private final String description;
+    private String description;
 
     protected StatusTask statusTask;
 
-    public Task(int id, String name, String description, StatusTask statusTask) {
-        this.id          = id;
+    public Task( String name, String description) {
         this.name        = name;
         this.description = description;
-        this.statusTask = statusTask;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
