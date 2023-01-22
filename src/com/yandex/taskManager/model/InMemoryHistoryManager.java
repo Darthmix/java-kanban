@@ -1,11 +1,11 @@
-package com.yandex.TaskManager.model;
+package com.yandex.taskManager.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    public static final byte HISTORY_LIST_MAX_SIZE = 4;
+    public static final byte HISTORY_LIST_MAX_SIZE = 10;
     private final List<Task> historyTasks; // Исптория изменений
 
 
@@ -15,6 +15,9 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task){
+        if (task == null){
+            return;
+        }
         if (this.historyTasks.size() >= HISTORY_LIST_MAX_SIZE){
             this.historyTasks.remove(0);
         }
@@ -23,6 +26,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public List<Task> getHistory(){
-        return historyTasks;
+        return List.copyOf(historyTasks);
     }
 }

@@ -1,4 +1,4 @@
-package com.yandex.TaskManager.model;
+package com.yandex.taskManager.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.yandex.TaskManager.model;
+package com.yandex.taskManager.model;
 
 public class SingleTask extends Task {
 

@@ -1,6 +1,6 @@
-package com.yandex.TaskManager;
+package com.yandex.taskManager;
 
-import com.yandex.TaskManager.model.*;
+import com.yandex.taskManager.model.*;
 
 public class Main {
 

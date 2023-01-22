@@ -1,21 +1,22 @@
-package com.yandex.TaskManager.model;
+package com.yandex.taskManager.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class InMemoryTaskManager<HistoryManagerType extends  HistoryManager> implements TaskManager {
+public class InMemoryTaskManager implements TaskManager {
 
-    private final HashMap<Integer, Task> taskById;  // Основной хеш список всех тасок
+    private final Map<Integer, Task> taskById;  // Основной хеш список всех тасок
 
     private final TaskIdGenerator taskIdGenerator; // Объект генерации новых ID для тасок
 
-    private final HistoryManagerType inMemoryHistoryManager;
+    private final HistoryManager historyManager;
 
-    public InMemoryTaskManager(HistoryManagerType inMemoryHistoryManager) {
+    public InMemoryTaskManager(HistoryManager historyManager) {
         this.taskIdGenerator = new TaskIdGenerator();
         this.taskById = new HashMap<>();
-        this.inMemoryHistoryManager = inMemoryHistoryManager;
+        this.historyManager = historyManager;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class InMemoryTaskManager<HistoryManagerType extends  HistoryManager> imp
     }
     @Override
     public void clearByType(TypeTask typeTask){
-        ArrayList<Task> tasks = this.getTasksByType(typeTask);
+        ArrayList<Task> tasks = (ArrayList<Task>) this.getTasksByType(typeTask);
         for (Task task: tasks){
             this.removeTask(task.getId());
         }
@@ -44,56 +45,49 @@ public class InMemoryTaskManager<HistoryManagerType extends  HistoryManager> imp
 
     @Override
     public Task getTaskById(int id) {
-        this.inMemoryHistoryManager.add(taskById.get(id));
-        return taskById.get(id);
+        Task task = taskById.get(id);
+        this.historyManager.add(task);
+        return task;
     }
 
     @Override
-    public ArrayList<Task> getAllTasks() {
-        for (Task task: this.taskById.values()){
-            this.inMemoryHistoryManager.add(task);
-        }
-
+    public List<Task> getAllTasks() {
         return new ArrayList<>(this.taskById.values());
     }
 
     @Override
-    public ArrayList<SingleTask> getSingleTasks(){
+    public List<SingleTask> getSingleTasks(){
         ArrayList<SingleTask> singleTasks = new ArrayList<>();
-        ArrayList<Task> tasks = this.getTasksByType(TypeTask.REG);
+        ArrayList<Task> tasks = (ArrayList<Task>) this.getTasksByType(TypeTask.REG);
         for (Task task: tasks){
             singleTasks.add((SingleTask) task);
-            this.inMemoryHistoryManager.add(task);
         }
         return singleTasks;
     }
     @Override
-    public ArrayList<SubTask> getSubTasks(){
+    public List<SubTask> getSubTasks(){
         ArrayList<SubTask> subTasks = new ArrayList<>();
-        ArrayList<Task> tasks = this.getTasksByType(TypeTask.SUB);
+        ArrayList<Task> tasks = (ArrayList<Task>) this.getTasksByType(TypeTask.SUB);
         for (Task task: tasks){
             subTasks.add((SubTask) task);
-            this.inMemoryHistoryManager.add(task);
         }
         return subTasks;
     }
     @Override
-    public ArrayList<EpicTask> getEpicTasks() {
+    public List<EpicTask> getEpicTasks() {
         ArrayList<EpicTask> epicTasks = new ArrayList<>();
-        ArrayList<Task> tasks = this.getTasksByType(TypeTask.EPIC);
+        ArrayList<Task> tasks = (ArrayList<Task>) this.getTasksByType(TypeTask.EPIC);
         for (Task task : tasks) {
             epicTasks.add((EpicTask) task);
-            this.inMemoryHistoryManager.add(task);
         }
         return epicTasks;
     }
-    @Override
-    public ArrayList<Task> getTasksByType(TypeTask typeTask) {
+
+    private List<Task> getTasksByType(TypeTask typeTask) {
         ArrayList<Task> tasks = new ArrayList<>();
         for (Task task : this.taskById.values()) {
             if (task.getTypeTask().equals(typeTask)){
                 tasks.add(task);
-                this.inMemoryHistoryManager.add(task);
             }
         }
         return tasks;
@@ -157,7 +151,7 @@ public class InMemoryTaskManager<HistoryManagerType extends  HistoryManager> imp
 
     @Override
     public List<Task> getHistory() {
-        return this.inMemoryHistoryManager.getHistory();
+        return this.historyManager.getHistory();
     }
 
     private static class TaskIdGenerator{
