@@ -1,4 +1,4 @@
-package com.yandex.taskManager.model;
+package com.yandex.taskmanager.model;
 
 public class SubTask extends Task{
     private  final  Integer epicTaskId;

@@ -1,4 +1,6 @@
-package com.yandex.taskManager.model;
+package com.yandex.taskmanager;
+
+import com.yandex.taskmanager.model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;

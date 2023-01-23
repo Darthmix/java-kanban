@@ -1,4 +1,4 @@
-package com.yandex.taskManager.model;
+package com.yandex.taskmanager.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ public class EpicTask extends Task {
         this.subTasks = new ArrayList<>();
     }
 
-    protected void modifySubTask(SubTask subTask) { // Add if not exist, or modify existed object
+    public void modifySubTask(SubTask subTask) { // Add if not exist, or modify existed object
         boolean findSubTask = false;
         for (int i = 0; i<this.subTasks.size(); i++){
             if (this.subTasks.get(i).getId() == subTask.getId()){

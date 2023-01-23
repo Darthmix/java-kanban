@@ -1,4 +1,4 @@
-package com.yandex.taskManager.model;
+package com.yandex.taskmanager.model;
 
 public abstract class Task {
     private int id;

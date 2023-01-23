@@ -1,11 +1,13 @@
-package com.yandex.taskManager.model;
+package com.yandex.taskmanager;
+
+import com.yandex.taskmanager.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    public static final byte HISTORY_LIST_MAX_SIZE = 10;
+    private static final byte HISTORY_LIST_MAX_SIZE = 10;
     private final List<Task> historyTasks; // Исптория изменений
 
 

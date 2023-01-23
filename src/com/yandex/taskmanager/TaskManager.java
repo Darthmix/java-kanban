@@ -1,6 +1,7 @@
-package com.yandex.taskManager.model;
+package com.yandex.taskmanager;
 
-import java.util.ArrayList;
+import com.yandex.taskmanager.model.*;
+
 import java.util.List;
 
 public interface TaskManager {
