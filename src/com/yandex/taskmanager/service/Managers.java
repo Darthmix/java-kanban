@@ -1,4 +1,4 @@
-package com.yandex.taskmanager;
+package com.yandex.taskmanager.service;
 
 public abstract class Managers {
     private Managers(){
