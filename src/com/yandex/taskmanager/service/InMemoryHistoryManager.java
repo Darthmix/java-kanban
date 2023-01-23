@@ -1,4 +1,4 @@
-package com.yandex.taskmanager;
+package com.yandex.taskmanager.service;
 
 import com.yandex.taskmanager.model.Task;
 
@@ -21,9 +21,15 @@ public class InMemoryHistoryManager implements HistoryManager {
             return;
         }
         if (this.historyTasks.size() >= HISTORY_LIST_MAX_SIZE){
-            this.historyTasks.remove(0);
+            //this.historyTasks.remove(0);
+            this.remove(0);
         }
         this.historyTasks.add(task);
+    }
+
+    @Override
+    public void remove(int id){
+        this.historyTasks.remove(id);
     }
 
     @Override
